@@ -1,0 +1,31 @@
+Install Ansible on AWS Ubuntu EC2 Instance:
+
+On Master:
+sudo apt-get update
+sudo apt install software-properties-common
+sudo apt-add-repository ppa:ansible/ansible
+sudo apt update
+sudo apt install ansible
+
+On Hosts/Slaves:
+sudo apt-get update
+sudo apt-get install python3
+
+
+ssh ubuntu@52.91.38.16 #to connect from master to slave node (user@ipaddress)
+ssh-keygen #to generate ssh rsa key to be used in th ssh connection
+
+Setting up Ansible back on the Master node
+sudo nano /etc/ansible/hosts
+
+-At the end of the file add:
+[group_name]
+ans_slave ansible_ssh_host=52.91.38.16 #a host/slave
+-Save the file
+
+- Check if ansible can access that host from the master:
+ansible -m ping group_name
+
+
+
+

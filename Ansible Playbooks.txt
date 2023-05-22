@@ -1,0 +1,47 @@
+# Install NGNIX
+
+1. sudo nano nginx-install.yml
+Paste the code bellow:
+---
+- name: set up ngnix webserver
+  hosts: all
+  become: true
+
+  tasks:
+  - name: ensure nginx is at the latest version
+    apt:
+      name: nginx
+      state: latest
+    vars:
+      use_backend: apt
+
+  - name: start nginx
+    service:
+      name: nginx
+      state: started
+      enabled: yes  # if you want to also enable nginx
+
+2. in the directory where you saved the nginx.install.yml file do:
+- ansible-playbook -i /etc/ansible/hosts nginx-install.yml --check #Checks if the tasks will be executed or there are errors
+- ansible-playbook -i /etc/ansible/hosts nginx-install.yml #Runs the playbook and deploys the service on the hosts listed in the file /etc/ansible/hosts
+
+3. To stop the nginx service change the nginx-install.yml file to:
+---
+- name: set up ngnix webserver
+  hosts: all
+  become: true
+
+  tasks:
+  - name: ensure nginx is at the latest version
+    apt:
+      name: nginx
+      state: latest
+    vars:
+      use_backend: apt
+
+  - name: start nginx
+    service:
+      name: nginx
+      state: stopped
+      enabled: yes  # if you want to also enable nginx
+
